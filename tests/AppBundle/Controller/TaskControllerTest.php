@@ -9,6 +9,7 @@ class TaskControllerTest extends WebTestCase
 {
     private $client = null;
     private $entityManager;
+    private $repository;
 
     /**
      * @return void
@@ -23,6 +24,8 @@ class TaskControllerTest extends WebTestCase
         );
 
         $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
+
+        $this->repository = $this->entityManager->getRepository('AppBundle:Task');
     }
 
     /**
@@ -70,7 +73,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testEditTask()
     {
-        $task = $this->entityManager->getRepository('AppBundle:Task')->findOneByTitle('Test task title');
+        $task = $this->repository->findOneByTitle('Test task title');
         $taskId = $task->getId();
 
         $crawler = $this->client->request(Request::METHOD_GET, "/tasks/$taskId/edit");
@@ -97,7 +100,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testToggleTask()
     {
-        $task = $this->entityManager->getRepository('AppBundle:Task')->findOneByTitle('Updated task');
+        $task = $this->repository->findOneByTitle('Updated task');
         $taskId = $task->getId();
 
         $this->client->request(Request::METHOD_GET, "/tasks/$taskId/toggle");
@@ -115,7 +118,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testRemoveTask()
     {
-        $task = $this->entityManager->getRepository('AppBundle:Task')->findOneByTitle('Updated task');
+        $task = $this->repository->findOneByTitle('Updated task');
         $taskId = $task->getId();
 
         $this->client->request(Request::METHOD_GET, "/tasks/$taskId/delete");
