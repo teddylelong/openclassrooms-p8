@@ -3,17 +3,21 @@
 namespace Tests\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultControllerTest extends WebTestCase
 {
     private $client = null;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $this->client = static::createClient(
             array(), array(
-                'PHP_AUTH_USER' => 'teddy',
-                'PHP_AUTH_PW'   => 'teddy',
+                'PHP_AUTH_USER' => 'test_user',
+                'PHP_AUTH_PW'   => 'test_user',
             )
         );
     }
@@ -25,7 +29,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testIndexUserIsLoggedIn()
     {
-        $crawler = $this->client->request('GET', '/');
+        $crawler = $this->client->request(Request::METHOD_GET, '/');
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertContains(
@@ -45,11 +49,18 @@ class DefaultControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/');
+        $client->request(Request::METHOD_GET, '/');
 
         $this->assertTrue(
             $client->getResponse()->isRedirect('http://localhost/login'),
             'response is a redirect to /login'
         );
+
+        $client->followRedirect();
+
+        $crawler = $client->getCrawler();
+
+        $this->assertCount(1, $crawler->filter('#username'));
+        $this->assertCount(1, $crawler->filter('#password'));
     }
 }

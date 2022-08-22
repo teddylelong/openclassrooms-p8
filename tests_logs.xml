@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="Project Test Suite" tests="2" assertions="3" failures="0" errors="0" time="1.603714">
+    <testsuite name="Tests\AppBundle\Controller\DefaultControllerTest" file="/var/www/todo_and_co/tests/AppBundle/Controller/DefaultControllerTest.php" tests="2" assertions="3" failures="0" errors="0" time="1.603714">
+      <testcase name="testIndexUserIsLoggedIn" class="Tests\AppBundle\Controller\DefaultControllerTest" file="/var/www/todo_and_co/tests/AppBundle/Controller/DefaultControllerTest.php" line="26" assertions="2" time="1.527069"/>
+      <testcase name="testIndexUserIsNotLoggedIn" class="Tests\AppBundle\Controller\DefaultControllerTest" file="/var/www/todo_and_co/tests/AppBundle/Controller/DefaultControllerTest.php" line="45" assertions="1" time="0.076645"/>
+    </testsuite>
+  </testsuite>
+</testsuites>
