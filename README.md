@@ -1,6 +1,5 @@
-ToDoList
-========
+# OpenClassrooms - Projet 8
 
-Base du projet #8 : Améliorez un projet existant
+Améliorez une application existante de ToDo & Co
 
-https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
+Ce dépot est un projet étudiant en cours de réalisation dans le cadre de ma formation *Développeur d'Applications PHP/Symfony* avec OpenClassrooms.
