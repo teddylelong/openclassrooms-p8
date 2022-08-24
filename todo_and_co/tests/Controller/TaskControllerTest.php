@@ -2,30 +2,28 @@
 
 namespace Tests\Controller;
 
+use App\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class TaskControllerTest extends WebTestCase
 {
     private $client = null;
-    private $entityManager;
-    private $repository;
+
+    private $taskRepository;
 
     /**
      * @return void
      */
     public function setUp()
     {
-        $this->client = static::createClient(
-            array(), array(
+        $this->client = static::createClient([], [
                 'PHP_AUTH_USER' => 'test_user',
                 'PHP_AUTH_PW'   => 'test_user',
-            )
+            ]
         );
 
-        $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-
-        $this->repository = $this->entityManager->getRepository('Task::class');
+        $this->taskRepository = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(Task::class);
     }
 
     /**
@@ -62,7 +60,7 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertContains(
             "Superbe ! La tâche a été bien été ajoutée.",
-            $crawler->filter('div.alert.alert-success')->text()
+            $crawler->filter('div.alert.alert-success')->text(null, false)
         );
     }
 
@@ -73,7 +71,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testEditTask()
     {
-        $task = $this->repository->findOneByTitle('Test task title');
+        $task = $this->taskRepository->findOneByTitle('Test task title');
         $taskId = $task->getId();
 
         $crawler = $this->client->request(Request::METHOD_GET, "/tasks/$taskId/edit");
@@ -89,7 +87,7 @@ class TaskControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
         $this->assertContains(
             "Superbe ! La tâche a bien été modifiée.",
-            $crawler->filter('div.alert.alert-success')->text()
+            $crawler->filter('div.alert.alert-success')->text(null, false)
         );
     }
 
@@ -100,7 +98,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testToggleTask()
     {
-        $task = $this->repository->findOneByTitle('Updated task');
+        $task = $this->taskRepository->findOneByTitle('Updated task');
         $taskId = $task->getId();
 
         $this->client->request(Request::METHOD_GET, "/tasks/$taskId/toggle");
@@ -118,7 +116,7 @@ class TaskControllerTest extends WebTestCase
      */
     public function testRemoveTask()
     {
-        $task = $this->repository->findOneByTitle('Updated task');
+        $task = $this->taskRepository->findOneByTitle('Updated task');
         $taskId = $task->getId();
 
         $this->client->request(Request::METHOD_GET, "/tasks/$taskId/delete");
@@ -126,6 +124,6 @@ class TaskControllerTest extends WebTestCase
         $this->client->followRedirect();
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertNull($this->entityManager->getRepository('Task::class')->find($taskId));
+        $this->assertNull($this->taskRepository->find($taskId));
     }
 }

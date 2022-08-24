@@ -14,6 +14,8 @@ class SecurityControllerTest extends WebTestCase
      */
     public function setUp()
     {
+        self::ensureKernelShutdown();
+
         $this->client = static::createClient();
     }
 
@@ -26,9 +28,9 @@ class SecurityControllerTest extends WebTestCase
     {
         $crawler = $this->client->request(Request::METHOD_GET, '/login');
 
-        $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertCount(1, $crawler->filter('#username'));
-        $this->assertCount(1, $crawler->filter('#password'));
+         $this->assertTrue($this->client->getResponse()->isSuccessful());
+         $this->assertCount(1, $crawler->filter('#username'));
+         $this->assertCount(1, $crawler->filter('#password'));
     }
 
     /**

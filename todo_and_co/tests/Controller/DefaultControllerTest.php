@@ -14,11 +14,12 @@ class DefaultControllerTest extends WebTestCase
      */
     public function setUp()
     {
-        $this->client = static::createClient(
-            array(), array(
+        self::ensureKernelShutdown();
+
+        $this->client = static::createClient([], [
                 'PHP_AUTH_USER' => 'test_user',
                 'PHP_AUTH_PW'   => 'test_user',
-            )
+            ]
         );
     }
 
@@ -47,6 +48,7 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testIndexUserIsNotLoggedIn()
     {
+        self::ensureKernelShutdown();
         $client = static::createClient();
 
         $client->request(Request::METHOD_GET, '/');
