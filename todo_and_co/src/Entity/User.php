@@ -8,8 +8,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table("user")
- * @ORM\Entity=(repositoryClass="App\Repository\User")
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity("email")
  */
 class User implements UserInterface
