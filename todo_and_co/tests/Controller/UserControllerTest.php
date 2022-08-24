@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class UserControllerTest extends WebTestCase
 
         $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $this->repository = $this->entityManager->getRepository('AppBundle:User');
+        $this->repository = $this->entityManager->getRepository('User::class');
     }
 
     /**

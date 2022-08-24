@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\AppBundle\Controller;
+namespace Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +25,7 @@ class TaskControllerTest extends WebTestCase
 
         $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
-        $this->repository = $this->entityManager->getRepository('AppBundle:Task');
+        $this->repository = $this->entityManager->getRepository('Task::class');
     }
 
     /**
@@ -126,6 +126,6 @@ class TaskControllerTest extends WebTestCase
         $this->client->followRedirect();
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertNull($this->entityManager->getRepository('AppBundle:Task')->find($taskId));
+        $this->assertNull($this->entityManager->getRepository('Task::class')->find($taskId));
     }
 }
