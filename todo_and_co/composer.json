@@ -42,13 +42,16 @@
         "symfony/translation": "^4.0",
         "symfony/twig-bundle": "^4.0",
         "symfony/validator": "^4.0",
-        "symfony/web-profiler-bundle": "^4.0",
-        "symfony/yaml": "^4.0"
+        "symfony/yaml": "^4.0",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "symfony/dotenv": "^4.0",
-        "symfony/phpunit-bridge": "^6.1"
+        "symfony/phpunit-bridge": "^6.1",
+        "symfony/stopwatch": "^4.0",
+        "symfony/web-profiler-bundle": "^4.0"
     },
     "config": {
         "preferred-install": {

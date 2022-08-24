@@ -25,5 +25,17 @@ services:
     App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
+
+    # REMOVE when AppBundle is removed
+    AppBundle\:
+        resource: '../src/AppBundle/*'
+        # you can exclude directories or files
+        # but if a service is unused, it's removed anyway
+        exclude: '../src/AppBundle/{Entity,Repository}'
+    AppBundle\Controller\:
+        resource: '../src/AppBundle/Controller'
+        public: true
+        tags: [ 'controller.service_arguments' ]
+    # END REMOVE
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

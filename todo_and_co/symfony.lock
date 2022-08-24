@@ -251,5 +251,8 @@
             "config/packages/test/web_profiler.yaml",
             "config/routes/dev/web_profiler.yaml"
         ]
+    },
+    "twig/extra-bundle": {
+        "version": "v3.3.4"
     }
 }
