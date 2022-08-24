@@ -84,7 +84,8 @@
     "extra": {
         "symfony": {
             "allow-contrib": true,
-            "require": "4.4.*"
+            "require": "4.4.*",
+            "symfony-public-dir": "/todo_and_co/public"
         }
     }
 }
