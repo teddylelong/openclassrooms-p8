@@ -5,6 +5,8 @@ use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\ErrorHandler\Debug;
 
+require_once __DIR__.'/../vendor/autoload.php';
+
 (new Dotenv())->bootEnv(dirname(__DIR__).'/.env');
 
 if ($_SERVER['APP_DEBUG']) {
