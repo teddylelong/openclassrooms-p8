@@ -27,6 +27,6 @@ security:
                 # target: app_any_route
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/users, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }
