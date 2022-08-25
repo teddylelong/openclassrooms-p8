@@ -3,11 +3,13 @@ security:
         App\Entity\User:
             algorithm: auto
 
+
     providers:
-        doctrine:
+        app_user_provider:
             entity:
-                class: App:User
+                class: App\Entity\User
                 property: username
+        # used to reload user from session & other features (e.g. switch_user)
 
     firewalls:
         dev:
