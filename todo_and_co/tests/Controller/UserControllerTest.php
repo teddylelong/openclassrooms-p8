@@ -15,7 +15,7 @@ class UserControllerTest extends WebTestCase
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = static::createClient([], [
                 'PHP_AUTH_USER' => 'test_user',
@@ -94,7 +94,7 @@ class UserControllerTest extends WebTestCase
      *
      * @return void
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         $userControllerTest = new UserControllerTest();
         $userControllerTest->setUp();
