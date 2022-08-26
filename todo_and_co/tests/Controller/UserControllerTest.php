@@ -20,7 +20,7 @@ class UserControllerTest extends WebTestCase
         $this->client = static::createClient();
         $this->userRepository = static::getContainer()->get(UserRepository::class);
 
-        $testUser = $this->userRepository->findOneByUsername('test_user');
+        $testUser = $this->userRepository->findOneByUsername('test_admin');
 
         $this->client->loginUser($testUser);
         $this->client->followRedirects();
