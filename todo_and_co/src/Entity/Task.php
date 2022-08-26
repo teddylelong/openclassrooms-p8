@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use App\EventListener\TaskListener;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\EntityListeners([TaskListener::class])]
 class Task
 {
     #[ORM\Id]
