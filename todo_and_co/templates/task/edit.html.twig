@@ -7,5 +7,14 @@
 
             <button type="submit" class="btn btn-success pull-right">Modifier</button>
         {{ form_end(form) }}
+
+        <p class="text-muted small">
+            Créé le {{ task.createdAt|date("d/m/Y") }} par
+            {% if task.user is empty %}
+                Anonyme
+            {% else %}
+                {{ task.user.username|capitalize }}
+            {% endif %}
+        </p>
     </div>
 {% endblock %}
