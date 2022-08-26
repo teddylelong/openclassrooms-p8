@@ -1,13 +1,16 @@
 security:
-    encoders:
+    enable_authenticator_manager: true
+    password_hashers:
         App\Entity\User:
             algorithm: auto
 
+
     providers:
-        doctrine:
+        app_user_provider:
             entity:
-                class: App:User
+                class: App\Entity\User
                 property: username
+        # used to reload user from session & other features (e.g. switch_user)
 
     firewalls:
         dev:
@@ -15,16 +18,15 @@ security:
             security: false
 
         main:
-            anonymous: ~
-            pattern: ^/
-            form_login:
-                login_path: login
-                check_path: login_check
-                always_use_default_target_path:  true
-                default_target_path:  /
-            logout: ~
+            entry_point: App\Security\LoginAuthenticator
+            lazy: true
+            custom_authenticator: App\Security\LoginAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
 
     access_control:
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/users, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/users, roles: PUBLIC_ACCESS }
         - { path: ^/, roles: ROLE_USER }

@@ -1,4 +1,4 @@
-FROM php:7.1-apache
+FROM php:8.1-apache
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
@@ -16,9 +16,8 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo pdo_mysql gd intl zip calendar dom mbstring zip xsl opcache
 
 RUN pecl install apcu && docker-php-ext-enable apcu
-# RUN pecl install apcu-4.0.11 && docker-php-ext-enable apcu
 
-# RUN pecl install -f xdebug \
-        # && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)\nxdebug.mode=develop,debug,coverage\nxdebug.start_with_request=yes" > /usr/local/etc/php/conf.d/xdebug.ini;
+RUN pecl install -f xdebug \
+        && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)\nxdebug.mode=develop,debug,coverage\nxdebug.start_with_request=yes" > /usr/local/etc/php/conf.d/xdebug.ini;
 
 WORKDIR /var/www/

@@ -2,7 +2,8 @@
 
 namespace Tests\Controller;
 
-use App\Entity\Task;
+use App\Repository\TaskRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,15 +16,16 @@ class TaskControllerTest extends WebTestCase
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
-        $this->client = static::createClient([], [
-                'PHP_AUTH_USER' => 'test_user',
-                'PHP_AUTH_PW'   => 'test_user',
-            ]
-        );
+        $this->client = static::createClient();
+        $userRepository = static::getContainer()->get(UserRepository::class);
 
-        $this->taskRepository = $this->client->getContainer()->get('doctrine.orm.entity_manager')->getRepository(Task::class);
+        $testUser = $userRepository->findOneByUsername('test_user');
+
+        $this->client->loginUser($testUser);
+
+        $this->taskRepository = static::getContainer()->get(TaskRepository::class);
     }
 
     /**
@@ -58,7 +60,7 @@ class TaskControllerTest extends WebTestCase
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Superbe ! La tâche a été bien été ajoutée.",
             $crawler->filter('div.alert.alert-success')->text(null, false)
         );
@@ -85,7 +87,7 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->client->getCrawler();
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Superbe ! La tâche a bien été modifiée.",
             $crawler->filter('div.alert.alert-success')->text(null, false)
         );

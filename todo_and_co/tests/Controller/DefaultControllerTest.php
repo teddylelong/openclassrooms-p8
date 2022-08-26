@@ -12,7 +12,7 @@ class DefaultControllerTest extends WebTestCase
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         self::ensureKernelShutdown();
 
@@ -24,7 +24,7 @@ class DefaultControllerTest extends WebTestCase
     }
 
     /**
-     * Test homepage with already logged in user
+     * Test homepage with already logged-in user
      *
      * @return void
      */
@@ -33,7 +33,7 @@ class DefaultControllerTest extends WebTestCase
         $crawler = $this->client->request(Request::METHOD_GET, '/');
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !",
             $crawler->filter('h1')->text()
         );
@@ -53,16 +53,13 @@ class DefaultControllerTest extends WebTestCase
 
         $client->request(Request::METHOD_GET, '/');
 
-        $this->assertTrue(
-            $client->getResponse()->isRedirect('http://localhost/login'),
-            'response is a redirect to /login'
-        );
+        $this->assertResponseRedirects('/login', 302);
 
         $client->followRedirect();
 
         $crawler = $client->getCrawler();
 
-        $this->assertCount(1, $crawler->filter('#username'));
-        $this->assertCount(1, $crawler->filter('#password'));
+        $this->assertCount(1, $crawler->filter('#inputUsername'));
+        $this->assertCount(1, $crawler->filter('#inputPassword'));
     }
 }

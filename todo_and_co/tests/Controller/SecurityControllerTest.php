@@ -12,7 +12,7 @@ class SecurityControllerTest extends WebTestCase
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         self::ensureKernelShutdown();
 
@@ -29,8 +29,8 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $this->client->request(Request::METHOD_GET, '/login');
 
          $this->assertTrue($this->client->getResponse()->isSuccessful());
-         $this->assertCount(1, $crawler->filter('#username'));
-         $this->assertCount(1, $crawler->filter('#password'));
+         $this->assertCount(1, $crawler->filter('#inputUsername'));
+         $this->assertCount(1, $crawler->filter('#inputPassword'));
     }
 
     /**
@@ -44,15 +44,15 @@ class SecurityControllerTest extends WebTestCase
 
         $form = $crawler->selectButton('Se connecter')->form();
         $this->client->submit($form, array(
-           '_username' => 'test_user',
-           '_password' => 'test_user',
+           'username' => 'test_user',
+           'password' => 'test_user',
         ));
         $this->client->followRedirect();
 
         $crawler = $this->client->getCrawler();
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !",
             $crawler->filter('h1')->text()
         );

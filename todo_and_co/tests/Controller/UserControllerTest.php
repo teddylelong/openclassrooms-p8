@@ -2,7 +2,7 @@
 
 namespace Tests\Controller;
 
-use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -15,21 +15,21 @@ class UserControllerTest extends WebTestCase
     /**
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
-        $this->client = static::createClient([], [
-                'PHP_AUTH_USER' => 'test_user',
-                'PHP_AUTH_PW'   => 'test_user',
-            ]
-        );
+        $this->client = static::createClient();
+        $this->userRepository = static::getContainer()->get(UserRepository::class);
+
+        $testUser = $this->userRepository->findOneByUsername('test_user');
+
+        $this->client->loginUser($testUser);
         $this->client->followRedirects();
 
         $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
-        $this->userRepository = $this->entityManager->getRepository(User::class);
     }
 
     /**
-     * Test list users rendering
+     * Test list users renderin
      *
      * @return void
      */
@@ -55,7 +55,7 @@ class UserControllerTest extends WebTestCase
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
 
-        $this->assertContains(
+        $this->assertStringContainsString(
             "Superbe ! L'utilisateur a bien été ajouté.",
             $crawler->filter('div.alert.alert-success')->text(null, false)
         );
@@ -82,8 +82,8 @@ class UserControllerTest extends WebTestCase
 
         $crawler = $this->client->getCrawler();
 
-        // $this->assertTrue($this->client->getResponse()->isSuccessful());
-        $this->assertContains(
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->assertStringContainsString(
             "Superbe ! L'utilisateur a bien été modifié",
             $crawler->filter('div.alert.alert-success')->text(null, false)
         );
@@ -94,7 +94,7 @@ class UserControllerTest extends WebTestCase
      *
      * @return void
      */
-    public static function tearDownAfterClass()
+    public static function tearDownAfterClass(): void
     {
         $userControllerTest = new UserControllerTest();
         $userControllerTest->setUp();
