@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 /**
  * @extends ServiceEntityRepository<TaskRepository>
@@ -45,5 +46,19 @@ class TaskRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    /**
+     * @param $value
+     * @return Task[]
+     */
+    public function findAllByUser($value): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.user = :val')
+            ->setParameter('val', $value)
+            ->getQuery()
+            ->execute()
+            ;
     }
 }

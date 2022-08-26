@@ -2,11 +2,14 @@
 
 namespace App\Entity;
 
+use App\EventListener\TaskListener;
 use App\Repository\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+#[ORM\EntityListeners([TaskListener::class])]
 class Task
 {
     #[ORM\Id]
@@ -27,6 +30,9 @@ class Task
 
     #[ORM\Column(type: 'boolean')]
     private $isDone;
+
+    #[ORM\ManyToOne(inversedBy: 'tasks')]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -87,6 +93,18 @@ class Task
     public function setIsDone(bool $isDone): self
     {
         $this->isDone = $isDone;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
