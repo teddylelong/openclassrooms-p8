@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity('username', message: "Ce pseudo est déjà utilisé.")]
@@ -21,15 +22,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank(message: "Veuillez saisir un nom d'utilisateur.")]
+    #[Assert\NotNull]
+    #[Assert\LessThanOrEqual(value: 180)]
     private $username;
 
     #[ORM\Column(type: 'json')]
     private $roles = [];
 
     #[ORM\Column(type: 'string')]
+    #[Assert\NotBlank(message: "Veuillez saisir un mot de passe.")]
+    #[Assert\NotNull]
     private string $password;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
+    #[Assert\NotBlank(message: "Veuillez saisir une adresse e-mail.")]
+    #[Assert\NotNull]
+    #[Assert\LessThanOrEqual(value: 255)]
+    #[Assert\Email]
     private $email;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class)]
@@ -40,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->tasks = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
