@@ -18,7 +18,7 @@ class DefaultControllerTest extends WebTestCase
 
         $this->client = static::createClient([], [
                 'PHP_AUTH_USER' => 'test_user',
-                'PHP_AUTH_PW'   => 'test_user',
+                'PHP_AUTH_PW'   => '0000',
             ]
         );
     }

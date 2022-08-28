@@ -45,7 +45,7 @@ class SecurityControllerTest extends WebTestCase
         $form = $crawler->selectButton('Se connecter')->form();
         $this->client->submit($form, array(
            'username' => 'test_user',
-           'password' => 'test_user',
+           'password' => '0000',
         ));
         $this->client->followRedirect();
 
