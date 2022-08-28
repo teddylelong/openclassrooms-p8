@@ -22,9 +22,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
-    #[Assert\NotBlank(message: "Veuillez saisir un nom d'utilisateur.")]
     #[Assert\NotNull]
-    #[Assert\LessThanOrEqual(value: 180)]
+    #[Assert\NotBlank(message: "Veuillez saisir un nom d'utilisateur.")]
+    #[Assert\Length(
+        min: 2,
+        max: 180,
+        minMessage: "Votre nom d'utilisateur doit être composé d'au moins {{ limit }} caractères.",
+        maxMessage: "Votre nom d'utilisateur ne doit pas dépasser {{ limit }} caractères."
+    )]
     private $username;
 
     #[ORM\Column(type: 'json')]
@@ -38,8 +43,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     #[Assert\NotBlank(message: "Veuillez saisir une adresse e-mail.")]
     #[Assert\NotNull]
-    #[Assert\LessThanOrEqual(value: 255)]
     #[Assert\Email]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: "Votre adresse e-mail doit être composée d'au moins {{ limit }} caractères.",
+        maxMessage: "Votre adresse e-amil ne doit pas dépasser {{ limit }} caractères."
+    )]
     private $email;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Task::class)]
