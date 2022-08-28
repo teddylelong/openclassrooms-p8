@@ -2,7 +2,9 @@
 
 namespace Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,6 +20,8 @@ class UserControllerTest extends WebTestCase
     public function setUp(): void
     {
         $this->client = static::createClient();
+
+        $this->databaseTool = $this->client->getContainer()->get(DatabaseToolCollection::class)->get();
         $this->userRepository = static::getContainer()->get(UserRepository::class);
 
         $testUser = $this->userRepository->findOneByUsername('test_admin');
@@ -29,12 +33,16 @@ class UserControllerTest extends WebTestCase
     }
 
     /**
-     * Test list users renderin
+     * Test list users rendering
      *
      * @return void
      */
     public function testListUsers()
     {
+        $this->databaseTool->loadFixtures([
+            UserFixtures::class,
+        ]);
+
         $this->client->request(Request::METHOD_GET, '/users');
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
@@ -87,21 +95,5 @@ class UserControllerTest extends WebTestCase
             "Superbe ! L'utilisateur a bien été modifié",
             $crawler->filter('div.alert.alert-success')->text(null, false)
         );
-    }
-
-    /**
-     * Delete the userTest after tests execution
-     *
-     * @return void
-     */
-    public static function tearDownAfterClass(): void
-    {
-        $userControllerTest = new UserControllerTest();
-        $userControllerTest->setUp();
-
-        $user = $userControllerTest->userRepository->findOneByUsername('UserTest_updated');
-
-        $userControllerTest->entityManager->remove($user);
-        $userControllerTest->entityManager->flush();
     }
 }

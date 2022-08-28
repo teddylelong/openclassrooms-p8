@@ -20,49 +20,39 @@ class TaskTest extends KernelTestCase
         $this->validator = $container->get('validator');
     }
 
+    /**
+     * @return Task
+     */
+    public function getEntity(): Task
+    {
+        return (new Task())
+            ->setTitle('Test task')
+            ->setContent('This is the content');
+    }
+
     public function testValidTask()
     {
-        $task = (new Task())
-            ->setTitle('Test task')
-            ->setContent('This is the content')
-        ;
-        $this->getValidationErrors($task, 0);
+        $this->getValidationErrors($this->getEntity(), 0);
     }
 
     public function testEmptyTitle()
     {
-        $task = (new Task())
-            ->setTitle('')
-            ->setContent('This is the content')
-        ;
-        $this->getValidationErrors($task, 1);
+        $this->getValidationErrors($this->getEntity()->setTitle(''), 1);
     }
 
     public function testNullTitle()
     {
-        $task = (new Task())
-            ->setTitle(null)
-            ->setContent('This is the content')
-        ;
-        $this->getValidationErrors($task, 2);
+        $this->getValidationErrors($this->getEntity()->setTitle(null), 2);
     }
 
-    public function testInvalidContent()
+    public function testEmptyContent()
     {
-        $task = (new Task())
-            ->setTitle('Test task')
-            ->setContent('')
-        ;
-        $this->getValidationErrors($task, 1);
+        $this->getValidationErrors($this->getEntity()->setContent(''), 1);
     }
 
     public function testNullContent()
     {
-        $task = (new Task())
-            ->setTitle('Test task')
-            ->setContent(null)
-        ;
-        $this->getValidationErrors($task, 2);
+        $this->getValidationErrors($this->getEntity()->setContent(null), 2);
 
     }
 
