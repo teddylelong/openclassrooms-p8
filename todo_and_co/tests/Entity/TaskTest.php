@@ -15,9 +15,7 @@ class TaskTest extends KernelTestCase
      */
     protected function setUp(): void
     {
-        static::bootKernel();
-        $container = self::$kernel->getContainer()->get('test.service_container');
-        $this->validator = $container->get('validator');
+        $this->validator = self::getContainer()->get('validator');
     }
 
     /**
@@ -32,7 +30,7 @@ class TaskTest extends KernelTestCase
 
     public function testValidTask()
     {
-        $this->getValidationErrors($this->getEntity(), 0);
+        $this->getValidationErrors($this->getEntity());
     }
 
     public function testEmptyTitle()
@@ -61,7 +59,7 @@ class TaskTest extends KernelTestCase
      * @param int $numberOfExpectedErrors
      * @return ConstraintViolationList
      */
-    private function getValidationErrors(Task $task, int $numberOfExpectedErrors): ConstraintViolationList
+    private function getValidationErrors(Task $task, int $numberOfExpectedErrors = 0): ConstraintViolationList
     {
         $errors = $this->validator->validate($task);
         $this->assertCount($numberOfExpectedErrors, $errors);

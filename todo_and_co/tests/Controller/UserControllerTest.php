@@ -13,6 +13,7 @@ class UserControllerTest extends WebTestCase
     private $client = null;
     private $userRepository;
     private $entityManager;
+    private $databaseTool;
 
     /**
      * @return void
@@ -23,13 +24,12 @@ class UserControllerTest extends WebTestCase
 
         $this->databaseTool = $this->client->getContainer()->get(DatabaseToolCollection::class)->get();
         $this->userRepository = static::getContainer()->get(UserRepository::class);
+        $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
         $testUser = $this->userRepository->findOneByUsername('test_admin');
 
         $this->client->loginUser($testUser);
         $this->client->followRedirects();
-
-        $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
     }
 
     /**
@@ -95,5 +95,21 @@ class UserControllerTest extends WebTestCase
             "Superbe ! L'utilisateur a bien été modifié",
             $crawler->filter('div.alert.alert-success')->text(null, false)
         );
+    }
+
+    /**
+     * Delete the userTest after tests execution
+     *
+     * @return void
+     */
+    public static function tearDownAfterClass(): void
+    {
+        $userControllerTest = new UserControllerTest();
+        $userControllerTest->setUp();
+
+        $user = $userControllerTest->userRepository->findOneByUsername('UserTest_updated');
+
+        $userControllerTest->entityManager->remove($user);
+        $userControllerTest->entityManager->flush();
     }
 }
