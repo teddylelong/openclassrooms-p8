@@ -23,6 +23,7 @@ class UserFixtures extends Fixture
         $user->setPassword($this->hasher->hashPassword($user, '0000'));
         $user->setEmail('user@localhost.com');
         $user->setRoles(['ROLE_USER']);
+
         $manager->persist($user);
 
         $admin = new User();
@@ -34,5 +35,8 @@ class UserFixtures extends Fixture
         $manager->persist($admin);
 
         $manager->flush();
+
+        $this->addReference('admin', $admin);
+        $this->addReference('user', $user);
     }
 }
