@@ -2,6 +2,7 @@
 
 namespace Tests\Entity;
 
+use App\Entity\Task;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\ConstraintViolationList;
@@ -27,6 +28,7 @@ class UserTest extends KernelTestCase
             ->setUsername('TestUser')
             ->setPassword('p@ssw0rd')
             ->setEmail('email@example.net')
+            ->setRoles(['ROLE_USER'])
         ;
     }
 
@@ -113,6 +115,29 @@ class UserTest extends KernelTestCase
             ['test@test.']
         ];
     }
+
+    public function testTasks()
+    {
+        $user = $this->getEntity();
+
+        for ($i = 0; $i < 2; $i++) {
+            $task = (new Task())
+                ->setTitle("test_$i")
+                ->setContent("test_$i");
+            $user->addTask($task);
+        }
+
+        $tasks = $user->getTasks();
+
+        $this->assertSame(2, count($user->getTasks()));
+        $this->assertInstanceOf(Task::class, $tasks[0]);
+        $this->assertInstanceOf(Task::class, $tasks[1]);
+
+        $user->removeTask($tasks[0]);
+
+        $this->assertSame(1, count($user->getTasks()));
+    }
+
 
     /**
      * @param User $user

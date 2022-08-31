@@ -12,6 +12,7 @@ class DefaultControllerTest extends WebTestCase
 {
     private $client = null;
     private $databaseTool;
+    private $userRepository;
 
     /**
      * @return void
