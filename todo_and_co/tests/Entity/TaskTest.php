@@ -25,7 +25,9 @@ class TaskTest extends KernelTestCase
     {
         return (new Task())
             ->setTitle('Test task')
-            ->setContent('This is the content');
+            ->setContent('This is the content')
+            ->setCreatedAt(new \DateTimeImmutable())
+            ;
     }
 
     public function testValidTask()
