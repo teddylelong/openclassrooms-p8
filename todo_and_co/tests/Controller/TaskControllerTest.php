@@ -116,7 +116,7 @@ class TaskControllerTest extends WebTestCase
      *
      * @return void
      */
-    public function testRemoveTask()
+    public function testDeleteTask()
     {
         $task = $this->taskRepository->findOneByTitle('Updated task');
         $taskId = $task->getId();

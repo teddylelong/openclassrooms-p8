@@ -2,7 +2,9 @@
 
 namespace Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
 use App\Repository\UserRepository;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -11,6 +13,7 @@ class UserControllerTest extends WebTestCase
     private $client = null;
     private $userRepository;
     private $entityManager;
+    private $databaseTool;
 
     /**
      * @return void
@@ -18,23 +21,28 @@ class UserControllerTest extends WebTestCase
     public function setUp(): void
     {
         $this->client = static::createClient();
+
+        $this->databaseTool = $this->client->getContainer()->get(DatabaseToolCollection::class)->get();
         $this->userRepository = static::getContainer()->get(UserRepository::class);
+        $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
 
         $testUser = $this->userRepository->findOneByUsername('test_admin');
 
         $this->client->loginUser($testUser);
         $this->client->followRedirects();
-
-        $this->entityManager = $this->client->getContainer()->get('doctrine.orm.entity_manager');
     }
 
     /**
-     * Test list users renderin
+     * Test list users rendering
      *
      * @return void
      */
     public function testListUsers()
     {
+        $this->databaseTool->loadFixtures([
+            UserFixtures::class,
+        ]);
+
         $this->client->request(Request::METHOD_GET, '/users');
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }

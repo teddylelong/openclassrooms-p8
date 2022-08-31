@@ -22,10 +22,12 @@ class Task
 
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank(message: "Vous devez saisir un titre.")]
+    #[Assert\NotNull]
     private $title;
 
     #[ORM\Column(type: 'text')]
     #[Assert\NotBlank(message: "Vous devez saisir du contenu.")]
+    #[Assert\NotNull]
     private $content;
 
     #[ORM\Column(type: 'boolean')]
@@ -40,68 +42,102 @@ class Task
         $this->isDone = false;
     }
 
+    /**
+     * @return string
+     */
     public function getId(): string
     {
         return $this->id;
     }
 
+    /**
+     * @return \Datetime
+     */
     public function getCreatedAt(): \Datetime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt($createdAt): void
+    /**
+     * @param $createdAt
+     * @return $this
+     */
+    public function setCreatedAt($createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
-    public function setTitle($title): void
+    /**
+     * @param $title
+     * @return $this
+     */
+    public function setTitle($title): self
     {
         $this->title = $title;
+
+        return $this;
     }
 
+    /**
+     * @return string
+     */
     public function getContent(): string
     {
         return $this->content;
     }
 
-    public function setContent($content): void
+    /**
+     * @param $content
+     * @return $this
+     */
+    public function setContent($content): self
     {
         $this->content = $content;
+
+        return $this;
     }
 
+    /**
+     * @return bool
+     */
     public function isDone(): bool
     {
         return $this->isDone;
     }
 
-    public function toggle($flag): void
+    /**
+     * @param $flag
+     * @return $this
+     */
+    public function toggle($flag): self
     {
         $this->isDone = $flag;
-    }
-
-    public function getIsDone(): ?bool
-    {
-        return $this->isDone;
-    }
-
-    public function setIsDone(bool $isDone): self
-    {
-        $this->isDone = $isDone;
 
         return $this;
     }
 
+    /**
+     * @return User|null
+     */
     public function getUser(): ?User
     {
         return $this->user;
     }
 
+    /**
+     * @param User|null $user
+     * @return $this
+     */
     public function setUser(?User $user): self
     {
         $this->user = $user;

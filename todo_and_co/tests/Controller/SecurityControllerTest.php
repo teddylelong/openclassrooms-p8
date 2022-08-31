@@ -2,12 +2,15 @@
 
 namespace Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class SecurityControllerTest extends WebTestCase
 {
     private $client = null;
+    private $databaseTool;
 
     /**
      * @return void
@@ -17,6 +20,7 @@ class SecurityControllerTest extends WebTestCase
         self::ensureKernelShutdown();
 
         $this->client = static::createClient();
+        $this->databaseTool = $this->client->getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
     /**
@@ -26,6 +30,10 @@ class SecurityControllerTest extends WebTestCase
      */
     public function testLoginUserIsNotLoggedIn()
     {
+        $this->databaseTool->loadFixtures([
+            UserFixtures::class,
+        ]);
+
         $crawler = $this->client->request(Request::METHOD_GET, '/login');
 
          $this->assertTrue($this->client->getResponse()->isSuccessful());
@@ -45,7 +53,7 @@ class SecurityControllerTest extends WebTestCase
         $form = $crawler->selectButton('Se connecter')->form();
         $this->client->submit($form, array(
            'username' => 'test_user',
-           'password' => 'test_user',
+           'password' => '0000',
         ));
         $this->client->followRedirect();
 
