@@ -7,19 +7,26 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * @codeCoverageIgnore
+ */
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
 
     public function load(ObjectManager $manager)
     {
         for ($i = 0; $i < 10; $i++) {
-            $userRef = rand(0, 1) ? 'user' : 'admin';
-
             $task = (new Task())
                 ->setTitle("Task #$i")
                 ->setContent("This is the content of task #$i")
-                ->setUser($this->getReference($userRef))
             ;
+
+            if ($i < 5) {
+                $task->setUser($this->getReference('user'));
+            } else {
+                $task->setUser($this->getReference('admin'));
+            }
+
             $manager->persist($task);
         }
         $manager->flush();
