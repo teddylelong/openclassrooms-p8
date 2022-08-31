@@ -2,12 +2,16 @@
 
 namespace Tests\Controller;
 
+use App\DataFixtures\UserFixtures;
+use App\Repository\UserRepository;
+use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultControllerTest extends WebTestCase
 {
     private $client = null;
+    private $databaseTool;
 
     /**
      * @return void
@@ -16,11 +20,15 @@ class DefaultControllerTest extends WebTestCase
     {
         self::ensureKernelShutdown();
 
-        $this->client = static::createClient([], [
-                'PHP_AUTH_USER' => 'test_user',
-                'PHP_AUTH_PW'   => '0000',
-            ]
-        );
+        $this->client = static::createClient();
+
+        $this->databaseTool = $this->client->getContainer()->get(DatabaseToolCollection::class)->get();
+        $this->userRepository = static::getContainer()->get(UserRepository::class);
+
+        $testUser = $this->userRepository->findOneByUsername('test_admin');
+
+        $this->client->loginUser($testUser);
+        $this->client->followRedirects();
     }
 
     /**
@@ -30,6 +38,10 @@ class DefaultControllerTest extends WebTestCase
      */
     public function testIndexUserIsLoggedIn()
     {
+        $this->databaseTool->loadFixtures([
+            UserFixtures::class,
+        ]);
+
         $crawler = $this->client->request(Request::METHOD_GET, '/');
 
         $this->assertTrue($this->client->getResponse()->isSuccessful());
@@ -37,8 +49,6 @@ class DefaultControllerTest extends WebTestCase
             "Bienvenue sur Todo List, l'application vous permettant de gérer l'ensemble de vos tâches sans effort !",
             $crawler->filter('h1')->text()
         );
-
-        // var_dump($this->client->getResponse()->getContent());
     }
 
     /**
