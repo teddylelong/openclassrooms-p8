@@ -4,9 +4,7 @@ namespace Tests\Repository;
 
 use App\DataFixtures\TaskFixtures;
 use App\Entity\Task;
-use App\Entity\User;
 use App\Repository\TaskRepository;
-use App\Repository\UserRepository;
 use Liip\TestFixturesBundle\Services\DatabaseToolCollection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
@@ -24,6 +22,9 @@ class TaskRepositoryTest extends KernelTestCase
         $this->databaseTool = static::getContainer()->get(DatabaseToolCollection::class)->get();
     }
 
+    /**
+     * Test task repository
+     */
     public function testTaskRepository()
     {
         $this->databaseTool->loadFixtures([
@@ -34,6 +35,9 @@ class TaskRepositoryTest extends KernelTestCase
         $this->assertEquals(10,$tasks);
     }
 
+    /**
+     * Test add() and delete() methods
+     */
     public function testAddAndDeleteTask()
     {
         $task = (new Task())

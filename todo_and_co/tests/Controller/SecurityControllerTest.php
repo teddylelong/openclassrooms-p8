@@ -65,28 +65,4 @@ class SecurityControllerTest extends WebTestCase
             $crawler->filter('h1')->text()
         );
     }
-
-    /**
-     * @return void
-     */
-//    public function testLogout()
-//    {
-//        $client = static::createClient(
-//            array(), array()
-//        );
-//
-//        $crawler = $client->request(Request::METHOD_GET, '/logout');
-//
-//        $client->followRedirect();
-//
-//        $client->reload();
-//
-//        var_dump($crawler->getUri());
-//
-//        $this->assertFalse($client->getRequest()->getUser());
-//        $this->assertCount(1, $crawler->filter('#username'));
-//        $this->assertCount(1, $crawler->filter('#password'));
-//
-//        echo $client->getResponse()->getContent();
-//    }
 }

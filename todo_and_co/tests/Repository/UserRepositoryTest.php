@@ -25,6 +25,9 @@ class UserRepositoryTest extends KernelTestCase
         $this->hasher = static::getContainer()->get(UserPasswordHasherInterface::class);
     }
 
+    /**
+     * Test user repositoty
+     */
     public function testUserRepository()
     {
         $this->databaseTool->loadFixtures([
@@ -35,6 +38,9 @@ class UserRepositoryTest extends KernelTestCase
         $this->assertEquals(2, $users);
     }
 
+    /**
+     * Test add() and delete() methods
+     */
     public function testAddAndDeleteUser()
     {
         $user = (new User())
@@ -63,6 +69,9 @@ class UserRepositoryTest extends KernelTestCase
         $this->assertNull($test);
     }
 
+    /**
+     * Test upgradePassword() method
+     */
     public function testUpgradePassword()
     {
         $user = $this->userRepository->findOneByUsername('test_user');
@@ -72,5 +81,19 @@ class UserRepositoryTest extends KernelTestCase
 
         $user = $this->userRepository->findOneByUsername('test_user');
         $this->assertSame($hash, $user->getPassword());
+    }
+
+    /**
+     * Test upgradePassword method with invalid User
+     */
+    public function testInvalidUpgradePassword()
+    {
+        $invalidUser = [
+            'username' => 'test',
+            'password' => 'p@ssw0rd',
+        ];
+
+        $this->expectException(\TypeError::class);
+        $this->userRepository->upgradePassword($invalidUser, $invalidUser['password']);
     }
 }
