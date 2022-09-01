@@ -20,6 +20,8 @@ class UserTest extends KernelTestCase
     }
 
     /**
+     * Get a valid entity
+     *
      * @return User
      */
     public function getEntity(): User
@@ -32,54 +34,84 @@ class UserTest extends KernelTestCase
         ;
     }
 
+    /**
+     * Test a valid user Entity
+     */
     public function testValidUser()
     {
         $this->getValidationErrors($this->getEntity());
     }
 
+    /**
+     * Test with empty username
+     */
     public function testUsernameEmpty()
     {
         $this->getValidationErrors($this->getEntity()->setUsername(''), 2);
     }
 
+    /**
+     * Test with null username
+     */
     public function testUsernameNull()
     {
         $this->expectException(\TypeError::class);
         $this->getEntity()->setUsername(null);
     }
 
+    /**
+     * Test with a username bigger than 180 char
+     */
     public function testUsernameBiggerThanLimit()
     {
         $this->getValidationErrors($this->getEntity()->setUsername(str_repeat('A', 181)), 1);
     }
 
+    /**
+     * Test with an already used username
+     */
     public function testUsernameAlreadyUsed()
     {
         $this->getValidationErrors($this->getEntity()->setUsername('test_user'), 1);
     }
 
+    /**
+     * Test with empty password
+     */
     public function testPasswordEmpty()
     {
         $this->getValidationErrors($this->getEntity()->setPassword(''), 1);
     }
 
+    /**
+     * Test with null password
+     */
     public function testPasswordNull()
     {
         $this->expectException(\TypeError::class);
         $this->getEntity()->setPassword(null);
     }
 
+    /**
+     * Test with empty email
+     */
     public function testEmailEmpty()
     {
         $this->getValidationErrors($this->getEntity()->setEmail(''), 2);
     }
 
+    /**
+     * Test with null email
+     */
     public function testEmailNull()
     {
         $this->expectException(\TypeError::class);
         $this->getEntity()->setEmail(null);
     }
 
+    /**
+     * Test with email bigger than 255 chars
+     */
     public function testEmailBiggerThanLimit()
     {
         $this->getValidationErrors($this->getEntity()->setEmail(str_repeat('A', 255)), 1);
@@ -116,6 +148,9 @@ class UserTest extends KernelTestCase
         ];
     }
 
+    /**
+     * Test getTasks(), addTask() and removeTask() methods
+     */
     public function testTasks()
     {
         $user = $this->getEntity();
@@ -136,6 +171,9 @@ class UserTest extends KernelTestCase
         $user->removeTask($tasks[0]);
 
         $this->assertSame(1, count($user->getTasks()));
+
+        $this->expectException(\TypeError::class);
+        $user->removeTask($tasks[100]);
     }
 
 

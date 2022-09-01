@@ -30,8 +30,6 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * Test tasks list rendering
-     *
-     * @return void
      */
     public function testListTasks()
     {
@@ -41,8 +39,6 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * Test create a task form
-     *
-     * @return void
      */
     public function testCreateTask()
     {
@@ -67,9 +63,7 @@ class TaskControllerTest extends WebTestCase
     }
 
     /**
-     * Test edit a task form feature
-     *
-     * @return void
+     * Test edit a task using form /task/create
      */
     public function testEditTask()
     {
@@ -95,8 +89,6 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * Test toggle a task feature
-     *
-     * @return void
      */
     public function testToggleTask()
     {
@@ -113,8 +105,6 @@ class TaskControllerTest extends WebTestCase
 
     /**
      * Test remove a task feature
-     *
-     * @return void
      */
     public function testDeleteTask()
     {

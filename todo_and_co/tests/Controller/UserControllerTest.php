@@ -34,8 +34,6 @@ class UserControllerTest extends WebTestCase
 
     /**
      * Test list users rendering
-     *
-     * @return void
      */
     public function testListUsers()
     {
@@ -47,6 +45,9 @@ class UserControllerTest extends WebTestCase
         $this->assertTrue($this->client->getResponse()->isSuccessful());
     }
 
+    /**
+     * Create a user using the form /users/create
+     */
     public function testCreateUser()
     {
         $crawler = $this->client->request(Request::METHOD_GET, '/users/create');
@@ -71,8 +72,6 @@ class UserControllerTest extends WebTestCase
 
     /**
      * Test edit a user feature
-     *
-     * @return void
      */
     public function testEditUser()
     {
@@ -99,8 +98,6 @@ class UserControllerTest extends WebTestCase
 
     /**
      * Delete the userTest after tests execution
-     *
-     * @return void
      */
     public static function tearDownAfterClass(): void
     {
