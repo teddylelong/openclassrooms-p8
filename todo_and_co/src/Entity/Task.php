@@ -62,7 +62,7 @@ class Task
      * @param $createdAt
      * @return $this
      */
-    public function setCreatedAt($createdAt): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -81,7 +81,7 @@ class Task
      * @param $title
      * @return $this
      */
-    public function setTitle($title): self
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -100,7 +100,7 @@ class Task
      * @param $content
      * @return $this
      */
-    public function setContent($content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
@@ -119,7 +119,7 @@ class Task
      * @param $flag
      * @return $this
      */
-    public function toggle($flag): self
+    public function toggle(bool $flag): self
     {
         $this->isDone = $flag;
 

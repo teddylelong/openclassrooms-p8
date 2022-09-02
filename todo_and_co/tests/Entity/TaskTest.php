@@ -42,7 +42,8 @@ class TaskTest extends KernelTestCase
 
     public function testNullTitle()
     {
-        $this->getValidationErrors($this->getEntity()->setTitle(null), 2);
+        $this->expectException(\TypeError::class);
+        $this->getEntity()->setTitle(null);
     }
 
     public function testEmptyContent()
@@ -52,8 +53,8 @@ class TaskTest extends KernelTestCase
 
     public function testNullContent()
     {
-        $this->getValidationErrors($this->getEntity()->setContent(null), 2);
-
+        $this->expectException(\TypeError::class);
+        $this->getEntity()->setContent(null);
     }
 
     /**

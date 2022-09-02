@@ -129,7 +129,7 @@ class UserTest extends KernelTestCase
      */
     public function testEmailNotValid($email)
     {
-        $this->getValidationErrors($this->getEntity()->setEmail($email), 1);;
+        $this->getValidationErrors($this->getEntity()->setEmail($email), 1);
     }
 
     /**
