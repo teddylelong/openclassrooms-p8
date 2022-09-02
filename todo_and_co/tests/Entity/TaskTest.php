@@ -57,6 +57,17 @@ class TaskTest extends KernelTestCase
         $this->getEntity()->setContent(null);
     }
 
+    public function testEmptyAuthor()
+    {
+        $this->expectException(\TypeError::class);
+        $this->getEntity()->setUser('');
+    }
+
+    public function testNullAuthor()
+    {
+        $this->getValidationErrors($this->getEntity()->setUser(null));
+    }
+
     /**
      * @param Task $task
      * @param int $numberOfExpectedErrors
