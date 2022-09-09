@@ -6,6 +6,19 @@ Améliorez une application existante de ToDo & Co
 
 Ce dépot est un projet étudiant en cours de réalisation dans le cadre de ma formation *Développeur d'Applications PHP/Symfony* avec OpenClassrooms.
 
+## Navigation
+
+Utilisez-les liens suivants afin d'accéder rapidement aux ressources liées au projet :
+
+- [Diagrammes UML](https://github.com/teddylelong/openclassrooms-p8/tree/main/UML) :
+  1. [Cas d'utilisation](https://github.com/teddylelong/openclassrooms-p8/tree/main/UML/01-cas-utilisation)
+  2. [Séquentiels](https://github.com/teddylelong/openclassrooms-p8/tree/main/UML/02-sequences)
+  3. [MCD](https://github.com/teddylelong/openclassrooms-p8/blob/main/UML/03-MCD.png)
+  4. [MPD (MySQL)](https://github.com/teddylelong/openclassrooms-p8/blob/main/UML/04-MPD.png)
+- [Issues du projet](https://github.com/teddylelong/openclassrooms-p8/issues?q=is%3Aissue+is%3Aclosed)
+- [Contribuer au projet, mode d'emploi](https://github.com/teddylelong/openclassrooms-p8/blob/main/CONTRIBUTING.md)
+- [Rapport de couverture de code généré par PHPUnit](https://htmlpreview.github.io/?https://github.com/teddylelong/openclassrooms-p8/blob/main/todo_and_co/public/test-coverage/index.html)
+
 ## Arborescence du projet
 
 Trois dossiers se trouvent à la racine du projet :
