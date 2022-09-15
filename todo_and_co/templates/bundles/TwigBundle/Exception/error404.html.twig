@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Page non-trouvée</h1>
+
+    <p>
+        Désolé ! La page que vous recherchez n'existe pas.
+        Veuillez vérifier l'adresse à laquelle vous essayez d'accéder ou <a href="{{ path('homepage') }}">retournez à la page d'accueil</a>.
+    </p>
+{% endblock %}
