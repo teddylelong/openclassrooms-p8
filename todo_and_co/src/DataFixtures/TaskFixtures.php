@@ -15,7 +15,7 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 14; $i++) {
             $task = (new Task())
                 ->setTitle("Task #$i")
                 ->setContent("This is the content of task #$i")
@@ -23,8 +23,10 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
 
             if ($i < 5) {
                 $task->setUser($this->getReference('user'));
-            } else {
+            } elseif( $i < 9) {
                 $task->setUser($this->getReference('admin'));
+            } else {
+                $task->setUser(null);
             }
 
             $manager->persist($task);
