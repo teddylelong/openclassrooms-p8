@@ -1,5 +1,7 @@
 # Contribuez au projet Todo List !
 
+Avant de commencer, nous vous invitons à lire le [ReadMe du projet](https://github.com/teddylelong/openclassrooms-p8/blob/main/README.md).
+
 Si vous souhaitez améliorer notre application Todo List, n'hésitez pas à contribuer en 
 nous soumettant vos idées.
 

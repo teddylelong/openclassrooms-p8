@@ -20,7 +20,7 @@ class TaskController extends AbstractController
     {
         return $this->render(
             'task/list.html.twig',
-            ['tasks' => $entityManager->getRepository(Task::class)->findAllByUser($this->getUser())]);
+            ['tasks' => $entityManager->getRepository(Task::class)->findAll()]);
     }
 
     #[Route('/tasks/create', name: 'task_create')]

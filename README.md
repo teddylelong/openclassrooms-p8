@@ -6,6 +6,16 @@ Améliorez une application existante de ToDo & Co
 
 Ce dépot est un projet étudiant en cours de réalisation dans le cadre de ma formation *Développeur d'Applications PHP/Symfony* avec OpenClassrooms.
 
+### Pré-requis :
+
+- Installez [Docker](https://docs.docker.com/get-docker/)
+- Installez [Composer](https://getcomposer.org/download/)
+
+Ce projet fonctionne sous PHP `8.1` et Symfony `6.1`. L'image Docker fournie vous permettra de
+faire fonctionner l'environement de test complet. Le gestionnaire de dépendances Composer
+permetra d'installer sur cet environement l'ensemble des paquets requis pour le bon
+fonctionnement du projet.
+
 ## Navigation
 
 Utilisez-les liens suivants afin d'accéder rapidement aux ressources liées au projet :
@@ -30,10 +40,6 @@ Trois dossiers se trouvent à la racine du projet :
 
 Suivez les étapes ci-dessous afin d'effectuer une installation locale de ce projet.
 
-### Pré-requis :
-
-- Installez [Docker](https://docs.docker.com/get-docker/)
-- Installez [Composer](https://getcomposer.org/download/)
 
 ### 1. Clonez le projet
 

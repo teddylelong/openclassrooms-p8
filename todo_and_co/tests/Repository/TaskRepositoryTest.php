@@ -32,7 +32,7 @@ class TaskRepositoryTest extends KernelTestCase
         ]);
 
         $tasks = $this->taskRepository->count([]);
-        $this->assertEquals(10,$tasks);
+        $this->assertEquals(14,$tasks);
     }
 
     /**
